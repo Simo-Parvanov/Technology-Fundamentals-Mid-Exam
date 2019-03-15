@@ -1,0 +1,57 @@
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
+
+public class test2 {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        List<String> n = Arrays.stream(scanner.nextLine()
+                .split("\\|"))
+                .collect(Collectors.toList());
+
+        int energie = 100;
+        int coins = 100;
+        for (int i = 0; i < n.size(); i++) {
+            String[] token = n.get(i).split("-");
+            String element = token[0];
+            int num = Integer.parseInt(token[1]);
+
+            if (element.equals("rest")) {
+                if (num + energie > 100) {
+                    num = 0;
+                }
+                energie += num;
+                System.out.println(String.format("You gained %d energy.", num));
+                System.out.println(String.format("Current energy: %d.", energie));
+
+            } else if (element.equals("order")) {
+                if (energie - 30 >= 0) {
+                    energie -= 30;
+                    coins += num;
+                    System.out.println(String.format("You earned %d coins.", num));
+
+                } else {
+                    energie += 50;
+                    System.out.println("You had to rest!");
+                }
+            } else {
+                coins -= num;
+                if (coins <= 0) {
+                    System.out.println(String.format("Closed! Cannot afford %s.", element));
+                    break;
+
+                } else {
+                    System.out.println(String.format("You bought %s.", element));
+                }
+            }
+
+        }
+        if (coins > 0) {
+            System.out.println("Day completed!");
+            System.out.println(String.format("Coins: %d", coins));
+            System.out.println(String.format("Energy: %d", energie));
+        }
+    }
+}
