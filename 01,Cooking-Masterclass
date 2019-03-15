@@ -1,0 +1,22 @@
+import java.util.Scanner;
+
+public class test3 {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        double budget = Double.parseDouble(scanner.nextLine());
+        int students = Integer.parseInt(scanner.nextLine());
+        double priceFlour = Double.parseDouble(scanner.nextLine());
+        double priceEgg = Double.parseDouble(scanner.nextLine());
+        double priceApron = Double.parseDouble(scanner.nextLine());
+
+        double kk = students + (students * 0.2);
+        int ll = students / 5;
+        double ddd =  priceApron * (Math.ceil(kk)) + priceEgg * 10 * (students) + priceFlour * (students - ll);
+        
+        if (ddd <= budget){
+            System.out.println(String.format("Items purchased for %.2f$.",ddd));
+        }else {
+            System.out.println(String.format("%.2f$ more needed.",ddd - budget));
+        }
+    }
+}
