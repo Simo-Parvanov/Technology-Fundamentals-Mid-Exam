@@ -1,0 +1,51 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
+
+public class test {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        String command = scanner.nextLine();
+
+        int bestSum = Integer.MIN_VALUE;
+        double bestLength = Double.MAX_VALUE;
+        double bestAverage = Integer.MIN_VALUE;
+        List<Integer> best = new ArrayList<>();
+
+        while (!command.equals("Bake It!")) {
+            List<Integer> commandSplit = Arrays.stream(command.split("\\#"))
+                    .map(Integer::parseInt)
+                    .collect(Collectors.toList());
+
+            int momentSum = 0;
+            double momentAverage = 0;
+            double listSize = commandSplit.size();
+
+            for (int i = 0; i < commandSplit.size(); i++) {
+                momentSum += commandSplit.get(i);
+            }
+            momentAverage = momentSum / listSize;
+            if (momentSum > bestSum) {
+                bestSum = momentSum;
+                best = commandSplit;
+                bestAverage = momentAverage;
+                bestLength = listSize;
+
+            } else if (momentSum == bestSum && momentAverage > bestAverage) {
+                best = commandSplit;
+                bestAverage = momentAverage;
+                bestLength = listSize;
+
+            } else if (bestAverage == momentAverage && momentAverage == bestAverage && listSize < bestLength) {
+                best = commandSplit;
+                bestLength = listSize;
+            }
+            command = scanner.nextLine();
+        }
+        System.out.println(String.format("Best Batch quality: %d", bestSum));
+        System.out.println(best.toString().replaceAll("\\[|,|\\]", ""));
+    }
+}
